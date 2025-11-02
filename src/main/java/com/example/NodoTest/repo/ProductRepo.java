@@ -52,7 +52,7 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
         LEFT JOIN FETCH p.images i
         LEFT JOIN FETCH p.productCategories pc
         LEFT JOIN FETCH pc.category c
-        WHERE p.id IN :ids AND i.status = '1'
+        WHERE p.id IN :ids
     """)
     List<Product> findAllWithImagesAndCategories(@Param("ids") List<Long> ids);
 

@@ -25,11 +25,11 @@ public interface CategoryRepo extends JpaRepository<Category, Long> {
     AND (:createdTo IS NULL OR DATE(c.createdDate) <= DATE(:createdTo))
     AND c.status = '1'
 """)
-    Page<Long> searchIds(Pageable paageable,
-                          @Param("name") String name,
+    Page<Long> searchIds(@Param("name") String name,
                          @Param("categoryCode") String categoryCode,
                          @Param("createdFrom") Date createdFrom,
-                         @Param("createdTo") Date createdTo);
+                         @Param("createdTo") Date createdTo,
+                         Pageable paageabl);
 
     @Query("""
     SELECT c FROM Category c

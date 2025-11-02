@@ -49,7 +49,7 @@ public class CategoryController {
     public ApiResponse<Page<CategoryResponse>> search(@RequestParam(defaultValue = "0") int page,
                                                       @RequestParam(defaultValue = "10") int size,
                                                       @RequestParam(required = false) String name,
-                                                      @RequestParam(required = false, name = "category_code") String categoryCode,
+                                                      @RequestParam(required = false) String categoryCode,
                                                       @RequestParam(required = false) Date createdFrom,
                                                       @RequestParam(required = false) Date createdTo){
         return ApiResponse.<Page<CategoryResponse>>builder()

@@ -108,7 +108,14 @@ public class ProductService {
         } else {
             name = null;
         }
-
+        if (categoryIds == null || categoryIds.isEmpty()) {
+            categoryIds = null;
+        }
+        if (productCode != null && !productCode.isBlank()) {
+            productCode = "%" + productCode.toLowerCase() + "%";
+        } else {
+            productCode = null;
+        }
         Pageable pageable = PageRequest.of(page, size);
 
         Page<Long> idPages = productRepo.searchIds(pageable, name, productCode, createdFrom, createdTo,categoryIds);
@@ -116,18 +123,6 @@ public class ProductService {
         if (idPage.isEmpty()) {
             return new PageImpl<>(List.of(), pageable, 0);
         }
-
-//        List<Product> products = productRepo.findAllById(idPage);
-//
-//        List<ProductImage> productImages = productImageRepo.findByProductIdIn(idPage);
-//
-//        Map<Long, List<ProductImage>> imagesMap = productImages.stream()
-//                .collect(Collectors.groupingBy(img -> img.getProduct().getId()));
-//
-//        for (Product product : products) {
-//            List<ProductImage> images = imagesMap.getOrDefault(product.getId(), Collections.emptyList());
-//            product.setImages(images);
-//        }
 
         List<Product> products = productRepo.findAllWithImagesAndCategories(idPage);
 

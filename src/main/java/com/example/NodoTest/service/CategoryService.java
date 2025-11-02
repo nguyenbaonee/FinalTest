@@ -81,32 +81,6 @@ public class CategoryService {
         return categoryMapper.toCategoryResponse(saved);
     }
 
-//    public Page<CategoryResponse> search(int page, int size, String name, String categoryCode, Date createdFrom, Date createdTo) {
-//        if (name != null && !name.isBlank()) {
-//            name = name.replace("\\", "\\\\")
-//                    .replace("%", "\\%")
-//                    .replace("_", "\\_")
-//                    .toLowerCase();
-//            name = "%" + name.toLowerCase() + "%";
-//        }
-//        else{
-//            name = null;
-//        }
-//
-//        Pageable pageable = PageRequest.of(page, size);
-//
-//        Page<Long> idPage = categoryRepo.searchIds( pageable, name, categoryCode, createdFrom, createdTo);
-//        List<Long> ids = idPage.getContent();
-//        List<CategoryImage> imagesId = categoryImageRepo.findByCategory_IdIn(ids);
-//        List<Category> categories = categoryRepo.findAllById(ids);
-//        categories.forEach(category -> {
-//            category.setImagesId(imagesId.stream()
-//                    .filter(image -> image.getCategory().getId().equals(category.getId()))
-//                    .collect(Collectors.toList()));
-//        });
-//        return new PageImpl<>(categoryMapper.toResponseList(categories),pageable,idPage.getTotalElements());
-//    }
-
     public Page<CategoryResponse> search(int page, int size,
                                          String name,
                                          String categoryCode,
@@ -124,7 +98,7 @@ public class CategoryService {
 
         Pageable pageable = PageRequest.of(page, size);
 
-        Page<Long> idPage = categoryRepo.searchIds(pageable, name, categoryCode, createdFrom, createdTo);
+        Page<Long> idPage = categoryRepo.searchIds( name, categoryCode, createdFrom, createdTo,pageable);
         List<Long> ids = idPage.getContent();
         if (ids.isEmpty()) {
             return new PageImpl<>(List.of(), pageable, 0);
