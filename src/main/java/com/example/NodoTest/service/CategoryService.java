@@ -98,7 +98,7 @@ public class CategoryService {
 
         Pageable pageable = PageRequest.of(page, size);
 
-        Page<Long> idPage = categoryRepo.searchIds( name, categoryCode, createdFrom, createdTo,pageable);
+        Page<Long> idPage = categoryRepo.searchIds( pageable,name, categoryCode, createdFrom, createdTo);
         List<Long> ids = idPage.getContent();
         if (ids.isEmpty()) {
             return new PageImpl<>(List.of(), pageable, 0);
